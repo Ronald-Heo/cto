@@ -27,14 +27,15 @@ namespace _1025
             
 
         }
-
+        public string strConn = "Server=localhost;Database=linkto;Uid=root;Pwd=apstinc;";
+        public string tagName = " ";
         private void Form1_Load(object sender, EventArgs e)
         {
             // TODO: 이 코드는 데이터를 'linktoDataSet.unit' 테이블에 로드합니다. 필요한 경우 이 코드를 이동하거나 제거할 수 있습니다.
             this.unitTableAdapter.Fill(this.linktoDataSet.unit);
 
             DataSet ds = new DataSet();
-            string strConn = "Server=localhost;Database=linkto;Uid=root;Pwd=apstinc;";
+            //string strConn = "Server=localhost;Database=linkto;Uid=root;Pwd=apstinc;";
 
             using (MySqlConnection conn = new MySqlConnection(strConn))
             {
@@ -71,7 +72,7 @@ namespace _1025
             string[] data = dataList.ToArray();
             comboBox1.Items.AddRange(data);
             comboBox1.SelectedIndex = 0;
-          
+            
 
 
         }
@@ -89,11 +90,40 @@ namespace _1025
         {
 
         }
+        
 
         private void input_Click(object sender, EventArgs e)
         {
            
-           
+            DataSet ds = new DataSet();
+            //string strConn = "Server=localhost;Database=linkto;Uid=root;Pwd=apstinc;";
+
+
+            MySqlConnection conn = new MySqlConnection(strConn);
+            conn.Open();
+            
+            string sql = "SELECT * FROM unit where ItemID = @tagName limit 50";
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            MySqlParameter paramTagName = new MySqlParameter("@tagName", MySqlDbType.Text);
+            paramTagName.Value = tagName;
+
+            // SqlCommand 객체의 Parameters 속성에 추가
+            cmd.Parameters.Add(paramTagName);
+
+            MySqlDataAdapter adpt = new MySqlDataAdapter(sql, conn);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+            
+            //adpt.Fill(ds);
+            adpt.Dispose();
+              while (rdr.Read())
+                {
+                    Console.WriteLine("{0}:{1}", rdr["ItemID"], rdr["ItemTimeStamp"]);
+                }
+            rdr.Close();
+
+
+            
+
         }
 
         
@@ -154,9 +184,9 @@ namespace _1025
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
-
-            //  ComboBox comboBox = (ComboBox)sender;
+            ComboBox comboBox = (ComboBox)sender;
+            textBox2.Text = (string)comboBox.SelectedItem;
+            tagName = (string)comboBox.SelectedItem;
 
         }
 
