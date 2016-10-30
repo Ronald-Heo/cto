@@ -39,7 +39,7 @@ namespace _1025
             using (MySqlConnection conn = new MySqlConnection(strConn))
             {
                 conn.Open();
-                string sql = "SELECT * FROM unit where ItemID ='FIC001.CO' limit 50";
+                string sql = "SELECT Distinct ItemID FROM unit limit 50";
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 MySqlDataAdapter adpt = new MySqlDataAdapter(sql, conn);
                 MySqlDataReader rdr = cmd.ExecuteReader();
@@ -48,7 +48,7 @@ namespace _1025
                 adpt.Dispose();
                 /*  while (rdr.Read())
                   {
-                     // Console.WriteLine("{0}: {1}", rdr["ItemID"], rdr["ItemTimeStamp"]);
+                     // Console.WriteLine("{0}", rdr["ItemID"]);
                   }*/
                 rdr.Close();
 
@@ -56,17 +56,20 @@ namespace _1025
             }
             Console.WriteLine("Before Merge: {0}", ds.Tables[0].Rows.Count);
             System.Threading.Thread.Sleep(1000);
+
+            //데이터베이스 목록 드롭다운에 넣기
+            List<string> dataList = new List<string>();
             foreach (DataRow r in ds.Tables[0].Rows)
             {
-                Console.WriteLine("{0}:{1}", r["ItemID"], r["ItemTimeStamp"]);
+                string list = r["ItemID"].ToString();
+                dataList.Add(list);
             }
-            System.Threading.Thread.Sleep(10000);
+            
+            //System.Threading.Thread.Sleep(10000);
             //Console.WriteLine("{0}", ds.Tables[0].Rows[0]);
             Console.WriteLine("{0}", ds.Tables[0]);
-            string[] data = { "사과", "토마토", "포도", "배", "복숭아" };
+            string[] data = dataList.ToArray();
             comboBox1.Items.AddRange(data);
-            
-
             comboBox1.SelectedIndex = 0;
           
 
