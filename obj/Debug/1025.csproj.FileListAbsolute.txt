@@ -7,4 +7,3 @@ C:\Users\Taewon Heo\Documents\Visual Studio 2015\Projects\1025\1025\obj\Debug\_1
 C:\Users\Taewon Heo\Documents\Visual Studio 2015\Projects\1025\1025\obj\Debug\1025.csproj.GenerateResource.Cache
 C:\Users\Taewon Heo\Documents\Visual Studio 2015\Projects\1025\1025\obj\Debug\1025.exe
 C:\Users\Taewon Heo\Documents\Visual Studio 2015\Projects\1025\1025\obj\Debug\1025.pdb
-C:\Users\Taewon Heo\Documents\Visual Studio 2015\Projects\1025\1025\obj\Debug\1025.csprojResolveAssemblyReference.cache

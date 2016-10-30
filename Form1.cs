@@ -59,17 +59,17 @@ namespace _1025
             System.Threading.Thread.Sleep(1000);
 
             //데이터베이스 목록 드롭다운에 넣기
-            List<string> dataList = new List<string>();
+            List<string> tableList = new List<string>();
             foreach (DataRow r in ds.Tables[0].Rows)
             {
                 string list = r["ItemID"].ToString();
-                dataList.Add(list);
+                tableList.Add(list);
             }
             
             //System.Threading.Thread.Sleep(10000);
             //Console.WriteLine("{0}", ds.Tables[0].Rows[0]);
             Console.WriteLine("{0}", ds.Tables[0]);
-            string[] data = dataList.ToArray();
+            string[] data = tableList.ToArray();
             comboBox1.Items.AddRange(data);
             comboBox1.SelectedIndex = 0;
             
@@ -90,43 +90,52 @@ namespace _1025
         {
 
         }
-        
 
+        
         private void input_Click(object sender, EventArgs e)
         {
-           
-            DataSet ds = new DataSet();
+
+            DataSet ds2 = new DataSet();
             //string strConn = "Server=localhost;Database=linkto;Uid=root;Pwd=apstinc;";
 
 
-            MySqlConnection conn = new MySqlConnection(strConn);
-            conn.Open();
+                MySqlConnection conn = new MySqlConnection(strConn);
             
-            string sql = "SELECT * FROM unit where ItemID = @tagName limit 50";
-            MySqlCommand cmd = new MySqlCommand(sql, conn);
-            MySqlParameter paramTagName = new MySqlParameter("@tagName", MySqlDbType.Text);
-            paramTagName.Value = tagName;
+                conn.Open();
 
-            // SqlCommand 객체의 Parameters 속성에 추가
-            cmd.Parameters.Add(paramTagName);
+                string sql = "SELECT * FROM unit where ItemID = @tagName limit 50";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlParameter paramTagName = new MySqlParameter("@tagName", MySqlDbType.Text);
+                paramTagName.Value = tagName;
 
-            MySqlDataAdapter adpt = new MySqlDataAdapter(sql, conn);
-            MySqlDataReader rdr = cmd.ExecuteReader();
-            
-            //adpt.Fill(ds);
-            adpt.Dispose();
-              while (rdr.Read())
+                // SqlCommand 객체의 Parameters 속성에 추가
+                cmd.Parameters.Add(paramTagName);
+
+                MySqlDataAdapter adpter = new MySqlDataAdapter(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+           
+            while (rdr.Read())
                 {
-                    Console.WriteLine("{0}:{1}", rdr["ItemID"], rdr["ItemTimeStamp"]);
+                    double listvalue = Convert.ToDouble(rdr["ItemCurrentValue"]);
+                    string timestamp = rdr["ItemTimeStamp"].ToString();
+                _valueList2.Add(listvalue);
+                _valueList3.Add(timestamp);
+                    //Console.WriteLine("{0}:{1}", rdr["ItemID"], rdr["ItemTimeStamp"]);
+                    
                 }
-            rdr.Close();
-
-
+                rdr.Close();
+           for(int i=0; i<_valueList2.Count; i++)
+            {
+                Console.WriteLine("{0}:{1}", _valueList2[i], _valueList3[i]);
+            }
             
+            //Console.WriteLine("{0},{1}", _valueList1[0], _valueList1[1]);
+
 
         }
 
-        
+        public List<double> _valueList2 = new List<double>();
+        public List<string> _valueList3 = new List<string>();
         private List<double> _valueList1;
 
         private void SetChart()
@@ -160,6 +169,7 @@ namespace _1025
             }
             chart1.Series[0].Points.AddXY(now.ToOADate(), _valueList1[_valueList1.Count - 1]);
             chart1.Invalidate();
+            
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -190,6 +200,6 @@ namespace _1025
 
         }
 
-
+        
     }
 }
