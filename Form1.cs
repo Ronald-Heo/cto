@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -33,6 +34,7 @@ namespace _1025
         {
             // TODO: 이 코드는 데이터를 'linktoDataSet.unit' 테이블에 로드합니다. 필요한 경우 이 코드를 이동하거나 제거할 수 있습니다.
             this.unitTableAdapter.Fill(this.linktoDataSet.unit);
+            
 
             DataSet ds = new DataSet();
             //string strConn = "Server=localhost;Database=linkto;Uid=root;Pwd=apstinc;";
@@ -117,7 +119,8 @@ namespace _1025
             while (rdr.Read())
                 {
                     double listvalue = Convert.ToDouble(rdr["ItemCurrentValue"]);
-                    string timestamp = rdr["ItemTimeStamp"].ToString();
+                
+                DateTime timestamp = DateTime.Parse(rdr["ItemTimeStamp"].ToString());
                 _valueList2.Add(listvalue);
                 _valueList3.Add(timestamp);
                     //Console.WriteLine("{0}:{1}", rdr["ItemID"], rdr["ItemTimeStamp"]);
@@ -135,48 +138,18 @@ namespace _1025
         }
 
         public List<double> _valueList2 = new List<double>();
-        public List<string> _valueList3 = new List<string>();
+        public List<DateTime> _valueList3 = new List<DateTime>();
         private List<double> _valueList1;
 
-        private void SetChart()
-        {
-            chart1.ChartAreas[0].AxisX.IsStartedFromZero = true;
-            chart1.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
-            chart1.ChartAreas[0].AxisX.ScaleView.SizeType = DateTimeIntervalType.Seconds;
-            chart1.ChartAreas[0].AxisX.IntervalAutoMode = IntervalAutoMode.FixedCount;
-            chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Seconds;
-            chart1.ChartAreas[0].AxisX.Interval = 0;
-            chart1.ChartAreas[0].AxisY.Maximum = 100; //Y축의 높이
-            _valueList1 = new List<double>();
-            DateTime now = DateTime.Now;
-            chart1.ChartAreas[0].AxisX.Minimum = now.ToOADate();
-            chart1.ChartAreas[0].AxisX.Maximum = now.AddSeconds(60).ToOADate();
-        }
+        
+        public Random random = new Random();
+        //private int pointIndex = 0;
+        //private int pointIndex2 = 0;
+        private long count = 0;
+        System.Timers.Timer timer;
 
-        private void AddData()
-        {
-            //_valueList1.Add(System.DateTime.Now.Second);
-            _valueList1.Add(new Random().Next(0, 100));
-            DateTime now = DateTime.Now;
-            if (chart1.Series[0].Points.Count > 0)
-            {
-                while (chart1.Series[0].Points[0].XValue < now.AddSeconds(-60).ToOADate())
-                {
-                    chart1.Series[0].Points.RemoveAt(0);
-                    chart1.ChartAreas[0].AxisX.Minimum = chart1.Series[0].Points[0].XValue;
-                    chart1.ChartAreas[0].AxisX.Maximum = now.AddSeconds(0).ToOADate();
-                }
-            }
-            chart1.Series[0].Points.AddXY(now.ToOADate(), _valueList1[_valueList1.Count - 1]);
-            chart1.Invalidate();
-            
-        }
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            AddData();
-        }
 
-        private void btn_go_Click(object sender, EventArgs e)
+        public void btn_go_Click(object sender, EventArgs e)
         {
             if (timer1.Enabled)
             {
