@@ -28,6 +28,7 @@ namespace _1025
         {
             
         }
+
         public string strConn = "Server=localhost;Database=linkto;Uid=root;Pwd=apstinc;";
         public string tagName = " ";
 
@@ -43,7 +44,7 @@ namespace _1025
             using (MySqlConnection conn = new MySqlConnection(strConn))
             {
                 conn.Open();
-                string sql = "SELECT Distinct ItemID FROM unit limit 50";
+                string sql = "SELECT Distinct ItemID FROM unit limit 500";
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 MySqlDataAdapter adpt = new MySqlDataAdapter(sql, conn);
                 MySqlDataReader rdr = cmd.ExecuteReader();
@@ -119,7 +120,7 @@ namespace _1025
             
                 conn.Open();
 
-                string sql = "SELECT * FROM unit where ItemID = @tagName limit 500";
+                string sql = "SELECT * FROM unit where ItemID = @tagName limit 1000";
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 MySqlParameter paramTagName = new MySqlParameter("@tagName", MySqlDbType.Text);
                 paramTagName.Value = tagName;
@@ -144,8 +145,8 @@ namespace _1025
             {
                 Console.WriteLine("{0}:{1}", _valueList2[i], _valueList3[i]);
             }
-            Console.WriteLine("{0}//{1}", _valueList3[3].ToOADate(), _valueList3[3]-TimeSpan.FromSeconds(10000));
-
+            Console.WriteLine("{0}//{1}", _valueList3[0].ToOADate(), _valueList3[1].ToOADate()- _valueList3[0].ToOADate());
+            //_valueList3[3]-TimeSpan.FromSeconds(10000)
         }
 
         public List<double> _valueList2 = new List<double>();
@@ -167,6 +168,7 @@ namespace _1025
             chart1.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
         }
         public int s = 0;
+        public double startTime = 42598.500162037;
         private void AddData()
         {
             // chart1.ChartAreas[0].AxisX.IsStartedFromZero = true;
@@ -176,34 +178,34 @@ namespace _1025
             // chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Seconds;
 
             int t = s++;
-            chart1.Series[0].Points.AddXY(t, _valueList2[t]);
-            chart1.Invalidate();
+            //double t2 = startTime + 0.000015747;
+            chart1.Series[0].Points.AddXY(_valueList3[t+100].ToOADate(), _valueList2[t]);
+            
 
-            //chart1.Series[0].XValueType = ChartValueType.DateTime;
-            //chart1.ChartAreas[0].AxisX.LabelStyle.Format = "yyyy-MM-dd";
+            chart1.Series[0].XValueType = ChartValueType.DateTime;
+            chart1.ChartAreas[0].AxisX.LabelStyle.Format = "yyyy-MM-dd hh:mm:ss";
            
             //chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Seconds;
             
-            chart1.ChartAreas[0].AxisX.Minimum = t-100;
-            chart1.ChartAreas[0].AxisX.Maximum = t;
-            chart1.ChartAreas[0].AxisX.Interval = 100;
-            chart1.ChartAreas[0].AxisY.Minimum = _valueList2.Min();
-            chart1.ChartAreas[0].AxisY.Maximum = _valueList2.Max(); //Y축의 높이
+            chart1.ChartAreas[0].AxisX.Minimum = _valueList3[t].ToOADate();
+            chart1.ChartAreas[0].AxisX.Maximum = _valueList3[t+100].ToOADate();
+            chart1.ChartAreas[0].AxisX.Interval = _valueList3[100].ToOADate()-_valueList3[0].ToOADate();
+            chart1.ChartAreas[0].AxisY.Minimum = Math.Truncate(_valueList2.Min());
+            chart1.ChartAreas[0].AxisY.Maximum = Math.Ceiling(_valueList2.Max()); //Y축의 높이
             _valueList1 = new List<double>();
             
             // Set scrollbar enable
             chart1.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-            if (chart1.Series[0].Points.Count > 100)
-            {
-                chart1.Series[0].Points.RemoveAt(0);
-                
-
-            }
+            //if (chart1.Series[0].Points.Count > 10000)
+            //{
+            //    chart1.Series[0].Points.RemoveAt(0);
+               
+            //}
 
             //_valueList1.Add(System.DateTime.Now.Second);
+            chart1.Invalidate();
 
-            
-            
+
 
         }
         private void timer1_Tick(object sender, EventArgs e)
@@ -221,7 +223,7 @@ namespace _1025
             }
             else
             {
-                SetChart();
+                AddData();
                 timer1.Interval = 1000;
                 timer1.Start();
                 btn_go.Text = "STOP";
