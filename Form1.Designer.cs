@@ -29,10 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.input = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -42,22 +41,18 @@
             this.unitBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.linktoDataSet = new _1025.linktoDataSet();
             this.unitTableAdapter = new _1025.linktoDataSetTableAdapters.unitTableAdapter();
+            this.transfer = new System.Windows.Forms.Button();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.unitBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.linktoDataSet)).BeginInit();
             this.SuspendLayout();
             // 
-            // textBox1
-            // 
-            this.textBox1.Font = new System.Drawing.Font("굴림", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.textBox1.Location = new System.Drawing.Point(831, 425);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(140, 36);
-            this.textBox1.TabIndex = 0;
-            // 
             // input
             // 
-            this.input.Location = new System.Drawing.Point(931, 369);
+            this.input.Location = new System.Drawing.Point(904, 102);
             this.input.Name = "input";
             this.input.Size = new System.Drawing.Size(75, 32);
             this.input.TabIndex = 1;
@@ -67,26 +62,25 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(730, 498);
+            this.textBox2.Location = new System.Drawing.Point(23, 21);
             this.textBox2.Name = "textBox2";
             this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox2.Size = new System.Drawing.Size(276, 25);
             this.textBox2.TabIndex = 2;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // chart1
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chart1.Legends.Add(legend3);
             this.chart1.Location = new System.Drawing.Point(23, 52);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.chart1.Series.Add(series3);
             this.chart1.Size = new System.Drawing.Size(772, 439);
             this.chart1.TabIndex = 3;
             this.chart1.Text = "chart1";
@@ -98,9 +92,9 @@
             // 
             // btn_go
             // 
-            this.btn_go.Location = new System.Drawing.Point(888, 197);
+            this.btn_go.Location = new System.Drawing.Point(904, 140);
             this.btn_go.Name = "btn_go";
-            this.btn_go.Size = new System.Drawing.Size(75, 23);
+            this.btn_go.Size = new System.Drawing.Size(75, 32);
             this.btn_go.TabIndex = 4;
             this.btn_go.Text = "go";
             this.btn_go.UseVisualStyleBackColor = true;
@@ -129,17 +123,55 @@
             // 
             this.unitTableAdapter.ClearBeforeFill = true;
             // 
+            // transfer
+            // 
+            this.transfer.Location = new System.Drawing.Point(890, 399);
+            this.transfer.Name = "transfer";
+            this.transfer.Size = new System.Drawing.Size(75, 23);
+            this.transfer.TabIndex = 6;
+            this.transfer.Text = "전송";
+            this.transfer.UseVisualStyleBackColor = true;
+            this.transfer.Click += new System.EventHandler(this.transfer_Click);
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(882, 368);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(100, 25);
+            this.textBox3.TabIndex = 7;
+            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(882, 428);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(100, 25);
+            this.textBox4.TabIndex = 8;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(904, 178);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(98, 29);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "Auto Scale";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1065, 543);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.transfer);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.btn_go);
             this.Controls.Add(this.chart1);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.input);
-            this.Controls.Add(this.textBox1);
             this.Name = "Form1";
             this.Text = "Query Call";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -152,8 +184,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button input;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
@@ -163,6 +193,10 @@
         private linktoDataSet linktoDataSet;
         private System.Windows.Forms.BindingSource unitBindingSource;
         private linktoDataSetTableAdapters.unitTableAdapter unitTableAdapter;
+        private System.Windows.Forms.Button transfer;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Button button1;
     }
 }
 
